@@ -1,0 +1,45 @@
+<div [ngStyle]="{'margin-bottom': settings.listSpacing+'px'}">
+  <p *ngIf="hasUrl">
+    <a class="title" [ngStyle]="{'font-size': settings.titleFontSize+'px'}" href="{{item.url}}" [attr.target]="settings.openLinkInNewTab ? '_blank' : null" [attr.rel]="settings.openLinkInNewTab ? 'noopener' : null">
+      {{item.title}}
+    </a>
+    <span *ngIf="item.url" class="domain">({{item.url}})</span>
+  </p>
+  <p *ngIf="!hasUrl">
+    <a class="title" [ngStyle]="{'font-size': settings.titleFontSize+'px'}" [routerLink]="['/item', item.id]" routerLinkActive="active">
+      {{item.title}}
+    </a>
+  </p>
+  <div class="subtext-palm">
+    <div class="details">
+      <span class="name"><a [routerLink]="['/user', item.author]" routerLinkActive="active">{{item.author}}</a></span>
+      <span class="right">{{item.points}} ★</span>
+    </div>
+    <div class="details">
+      <span class="right"><a [routerLink]="" routerLinkActive="active">| hide</a></span>
+    </div>
+    <div class="details">
+    {{ item.created_at_i }}
+    <a [routerLink]="['/item', item.id]" routerLinkActive="active" class="comment-number" *ngIf="item.type !== 'job'"> •
+      {{item.num_comments | comment }}
+    </a>
+    </div>
+  </div>
+  <div class="subtext-laptop">
+    <span *ngIf="item.type !== 'job'">
+      {{item.points}} points by
+      <a [routerLink]="['/users', item.author]" routerLinkActive="active">{{item.author}}</a>
+    </span>
+    <span class="details">
+      <span class="right"><a [routerLink]="" routerLinkActive="active">| hide</a></span>
+    </span>
+    <span [class.item-details]="item.type !== 'job'">
+      {{ item.created_at_i }}
+      <span *ngIf="item.type !== 'job'"> |
+        <a [routerLink]="['/item', item.id]" routerLinkActive="active">
+          {{item.num_comments | comment }}
+        </a>
+      </span>
+    </span>
+  </div>
+</div>
